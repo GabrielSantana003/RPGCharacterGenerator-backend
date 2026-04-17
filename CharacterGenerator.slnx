@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CharacterGenerator.API/CharacterGenerator.API.csproj" />
+    <Project Path="src/CharacterGenerator.Application/CharacterGenerator.Application.csproj" />
+    <Project Path="src/CharacterGenerator.Domain/CharacterGenerator.Domain.csproj" />
+    <Project Path="src/CharacterGenerator.Infrastructure/CharacterGenerator.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CharacterGenerator.API.Tests/CharacterGenerator.API.Tests.csproj" />
+    <Project Path="tests/CharacterGenerator.Application.Tests/CharacterGenerator.Application.Tests.csproj" />
+    <Project Path="tests/CharacterGenerator.Domain.Tests/CharacterGenerator.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
