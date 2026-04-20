@@ -5,6 +5,7 @@ A .NET 10 backend following Clean Architecture for a Fantasy RPG Character Gener
 ## Architecture
 
 This project is built using Clean Architecture principles:
+
 - **Domain**: Pure business logic (Entities, Value Objects, Domain Events). No external dependencies.
 - **Application**: Use Cases (Commands/Queries), DTOs, and Interfaces.
 - **Infrastructure**: Database access (EF Core, PostgreSQL), external services (AI Image Generation, PDF Export).
@@ -14,10 +15,13 @@ This project is built using Clean Architecture principles:
 
 1. Ensure you have the .NET 10 SDK installed.
 2. Build the project:
+
    ```bash
    dotnet build
    ```
+
 3. Run tests:
+
    ```bash
    dotnet test
    ```

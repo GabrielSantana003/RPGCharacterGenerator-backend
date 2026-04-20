@@ -252,6 +252,7 @@ The Domain builds the nucleus of the application — it fundamentally exists abs
 Fields: `Id`, `UserId`, `Name`, `Race`, `Class`, `Background`, `Description`, `PortraitUrl`, `IsPublic`, `ShareSlug`, `Attributes`, `CreatedAt`, `UpdatedAt`.
 
 Behavioral methods:
+
 - `RollAttributes()` — implements 4d6 drop lowest logic directly populating the 6 core stats
 - `SetAttributes(AttributeSet)` — triggers structural manual stat assignment
 - `MakePublic()` / `MakePrivate()` — dictates visibility behavior logic
@@ -273,6 +274,7 @@ Fields: `Value` (int, bound arbitrarily from 1-30). Computed attribute: `Modifie
 ### Core Rolling Framework: 4d6 drop lowest
 
 For all 6 base attributes collectively:
+
 1. Instigate 4 separate dice rolling values bounded 1-6.
 2. Filter outwards removing the bottom-value single result.
 3. Compute summation from the 3 retained integers.
@@ -304,6 +306,7 @@ Required contracts: `GetByIdAsync(Guid id)`, `GetByUserIdAsync(Guid userId)`, `G
 ### Required environment additions
 
 NuGet dependencies needed exclusively spanning `Infrastructure`:
+
 - `Microsoft.EntityFrameworkCore`
 - `Npgsql.EntityFrameworkCore.PostgreSQL`
 - `Microsoft.EntityFrameworkCore.Design` (critical for migration build sequences)
@@ -315,6 +318,7 @@ The context explicitly surfaces dual `DbSet` structures mapping to `Users` along
 ### Entity Setup mapping configurations (Fluent API)
 
 **`CharacterConfiguration`** asserts over the database table constraints for `characters`:
+
 - PK assignment targeting `Id` (Guid)
 - Asserts strict boundary limit 100 on absolute name requirements.
 - Configures generic string property limits up to 2000 mapping against free-text descriptions.
@@ -324,6 +328,7 @@ The context explicitly surfaces dual `DbSet` structures mapping to `Users` along
 - Wires logical foreign relationships translating `User` associations via `.HasOne().WithMany().HasForeignKey("UserId")` structures.
 
 **`UserConfiguration`** executes schema alignment spanning user metadata structures:
+
 - PK layout referencing `Id` logic paths.
 - Establishes exclusive indices around standardized email fields targeting distinct records spanning maximum 256.
 - Retains mapping covering hash credential blocks reliably securely.
@@ -346,6 +351,7 @@ dotnet ef database update --project src/CharacterGenerator.Infrastructure --star
 ### Exposing Dependencies (DI Registry layer)
 
 Structure mapping relies strictly utilizing isolated `DependencyInjection` extension classes routing required setups over startup flows securely exposing singular `AddInfrastructure` integration hooks:
+
 - Attaches the core Context mapped with valid raw postgreSQL runtime connection structures.
 - Registers standard repository interfaces onto exact scoping models (`Scoped`).
 - Integrates sub-services operating outwards against file system PDF elements, etc.
@@ -393,13 +399,14 @@ Pipeline routing wires active standard `JwtBearerDefaults.AuthenticationScheme` 
 ### Logical Application Flow Processing
 
 Each distinct operation processes statically mapping Command/Query isolation operations:
+
 1. Extracts data variables ensuring structure conforms with bounds
 2. Bridges routing operations calling internal repositories extracting matches
 3. Applies complex domain manipulations pushing structural entity logic
-4. Pushes persistency sync triggers ensuring database stores modified states 
+4. Pushes persistency sync triggers ensuring database stores modified states
 5. Outputs transformed abstract generic Data Transfer Objects masking system entities statically removing direct exposure vulnerabilities safely securely properly isolating internal definitions properly natively hiding structures.
 
-**`CreateCharacterHandler`**: processes attributes routing calls directly rolling automatic internal bounds if blank via ` character.RollAttributes()`, mapping resulting structures outputting logical generated generic mapped characters natively securely properly securely.
+**`CreateCharacterHandler`**: processes attributes routing calls directly rolling automatic internal bounds if blank via `character.RollAttributes()`, mapping resulting structures outputting logical generated generic mapped characters natively securely properly securely.
 
 **`GetCharacterHandler`**: identifies explicitly scoped requests filtering output matching authorization constraints actively blocking mismatched lookups securely validating permissions properly checking authorization states dynamically checking bounds.
 
@@ -407,12 +414,14 @@ Each distinct operation processes statically mapping Command/Query isolation ope
 
 ### Access node Controller Maps
 
-**`AuthController`** (`/api/auth`): 
+**`AuthController`** (`/api/auth`):
+
 - POST -> routes mappings securely capturing unauthenticated users outputting scoped tokens cleanly logging standard sessions dynamically natively cleanly correctly dynamically native mapping.
 
 Stored password values utilize explicit heavy hash mechanisms generating BCrypt combinations never allowing plaintext vulnerability leaks executing structural defense dynamically managing state properly safely natively dynamically managing mapping natively cleanly isolating components checking hashing natively properly.
 
 **`CharactersController`** (`/api/characters`) — binds dynamic structural scopes requesting standard mapped HTTP patterns cleanly executing isolated mappings dynamically enforcing token restrictions dynamically enforcing logic natively checking attributes cleanly:
+
 - `GET /` — cascade grids dynamically mapping natively
 - `POST /` — creates dynamically natively
 - `GET /{id}` — isolates cleanly accurately
@@ -426,9 +435,10 @@ Stored password values utilize explicit heavy hash mechanisms generating BCrypt 
 ### Middleware boundary exception handlers
 
 Implements generic try-catch replacement `ExceptionHandlingMiddleware` dynamically trapping boundary leaks mapping logical error exceptions accurately checking:
+
 - NotFoundException -> 404 natively
 - Unauthorized -> 403 natively
-- Validation issues -> 422 natively 
+- Validation issues -> 422 natively
 
 Safely mapping structures safely wrapping exceptions securely.
 

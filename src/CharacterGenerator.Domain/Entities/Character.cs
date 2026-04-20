@@ -26,9 +26,11 @@ public class Character : Entity
 
     private static readonly int[] DnD5eXpThresholds = { 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000 };
 
+#pragma warning disable CS8618
     private Character() { } // Needed by EF Core
+#pragma warning restore CS8618
 
-    private Character(Guid userId, string name, Race race, CharacterClass characterClass, CharacterMode mode)
+    private Character(Guid userId, string name, Race race, CharacterClass characterClass, CharacterMode mode, AttributeSheet sheet)
     {
         Id = Guid.NewGuid();
         UserId = userId;
@@ -41,15 +43,21 @@ public class Character : Entity
         IsPublic = false;
         ShareSlug = string.Empty;
         PortraitUrl = string.Empty;
-        
-        AttributeSheet = AttributeSheet.Create(10, 10, 10, 10, 10, 10, mode);
+        AttributeSheet = sheet;
 
         AddDomainEvent(new CharacterCreatedEvent(Id));
     }
 
-    public static Character Create(Guid userId, string name, Race race, CharacterClass characterClass, CharacterMode mode)
+    public static Character CreateDnD5e(Guid userId, string name, Race race, CharacterClass characterClass)
     {
-        return new Character(userId, name, race, characterClass, mode);
+        var sheet = AttributeSheet.CreateDnD5e(10, 10, 10, 10, 10, 10);
+        return new Character(userId, name, race, characterClass, CharacterMode.DnD5e, sheet);
+    }
+
+    public static Character CreateCustom(Guid userId, string name, Race race, CharacterClass characterClass, AttributeSheet sheet)
+    {
+        if (sheet == null) throw new ArgumentNullException(nameof(sheet));
+        return new Character(userId, name, race, characterClass, CharacterMode.Custom, sheet);
     }
 
     public void SetAttributes(AttributeSheet sheet)

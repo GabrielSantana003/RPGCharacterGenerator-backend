@@ -1,9 +1,9 @@
-using CharacterGenerator.Domain.Enums;
-
 namespace CharacterGenerator.Domain.Exceptions;
+
+using CharacterGenerator.Domain.ValueObjects;
 
 public class InvalidAttributeValueException : DomainException
 {
-    public InvalidAttributeValueException(AbilityType abilityType, int value, int min, int max) 
-        : base($"The value {value} is not valid for {abilityType}. Valid range is {min} to {max}.") { }
+    public InvalidAttributeValueException(AbilityDefinition ability, int value, int min, int max) 
+        : base($"The value {value} is not valid for {ability.Name}. Valid range is {min} to {max}.") { }
 }
