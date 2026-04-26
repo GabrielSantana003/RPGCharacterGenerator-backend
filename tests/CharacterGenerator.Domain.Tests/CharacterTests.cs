@@ -78,4 +78,39 @@ public class CharacterTests
         character.RemoveSkill(skillId);
         Assert.Empty(character.Skills);
     }
+
+    [Fact]
+    public void CreateCustom_Should_Initialize_Correctly()
+    {
+        var userId = Guid.NewGuid();
+        var name = "Custom Hero";
+        var race = new Race("Android", ImmutableDictionary<AbilityDefinition, int>.Empty);
+        var characterClass = new CharacterClass("Technomancer", "d6", "A tech mage");
+        
+        var str = new AbilityDefinition("Strength", "STR");
+        var sheet = AttributeSheet.CreateCustom(new[] { new AttributeScore(str, 10, 0) });
+
+        var character = Character.CreateCustom(userId, name, race, characterClass, sheet);
+
+        Assert.Equal(userId, character.UserId);
+        Assert.Equal(CharacterMode.Custom, character.Mode);
+        Assert.Equal(sheet, character.AttributeSheet);
+    }
+
+    [Fact]
+    public void GainExperience_In_Custom_Mode_Should_Only_Increase_XP()
+    {
+        var userId = Guid.NewGuid();
+        var race = new Race("Android", ImmutableDictionary<AbilityDefinition, int>.Empty);
+        var characterClass = new CharacterClass("Technomancer", "d6", "A tech mage");
+        var str = new AbilityDefinition("Strength", "STR");
+        var sheet = AttributeSheet.CreateCustom(new[] { new AttributeScore(str, 10, 0) });
+        
+        var character = Character.CreateCustom(userId, "Custom Hero", race, characterClass, sheet);
+
+        character.GainExperience(5000);
+        
+        Assert.Equal(5000, character.ExperiencePoints);
+        Assert.Equal(1, character.Level); // Level should stay at 1 in Custom mode (managed manually)
+    }
 }
